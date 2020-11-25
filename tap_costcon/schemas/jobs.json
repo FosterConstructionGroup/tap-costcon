@@ -1,0 +1,27 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "job_number": { "type": ["string"] },
+    "manager": { "type": ["null", "string"] },
+    "name": { "type": ["string"] },
+    "client": { "type": ["string"] },
+    "client_name": { "type": ["null", "string"] },
+    "category": { "type": ["string"] },
+    "invoice_type": { "type": ["string"] },
+    "job_type": { "type": ["string"] },
+    "status": { "type": ["string"] },
+    "date_project_open": { "type": ["null", "string"], "format": "date" },
+    "site_manager": { "type": ["null", "string"] },
+    "quantity_surveyor_code": { "type": ["null", "string"] },
+    "date_practical_completion": {
+      "type": ["null", "string"],
+      "format": "date"
+    },
+    "date_added": { "type": ["null", "string"], "format": "date" },
+    "date_modified": { "type": ["null", "string"], "format": "date" },
+    "time_added": { "type": ["string"], "format": "time" },
+    "time_modified": { "type": ["string"], "format": "time" },
+    "branch_id": { "type": ["number"] }
+  }
+}
