@@ -1,10 +1,10 @@
-from tap_costcon.fetch import handle_jobs
+from tap_costcon.fetch import handle_job_details
 
 ID_FIELDS = {
-    "jobs": ["job_number"],
+    "job_details": ["job_number"],
 }
 
 HANDLERS = {
-    "jobs": handle_jobs,
+    "job_details": handle_job_details,
 }
 

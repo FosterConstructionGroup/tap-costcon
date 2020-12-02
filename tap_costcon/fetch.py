@@ -2,6 +2,7 @@ import singer
 import singer.metrics as metrics
 from singer import metadata
 from singer.bookmarks import get_bookmark
+from os import path
 from datetime import datetime
 from tap_costcon.utility import (
     list_files,
@@ -13,14 +14,14 @@ from tap_costcon.utility import (
 )
 
 
-def handle_jobs(resource, schema, state, mdata, folder_path):
+def handle_job_details(resource, schema, state, mdata, folder_path):
     extraction_time = singer.utils.now()
     bookmark = get_bookmark(state, resource, "since")
     properties = schema["properties"]
 
     files = list_files(folder_path, resource)
     to_sync = (
-        files
+        [file for (file, time) in files]
         if bookmark == None
         else [
             file
