@@ -51,11 +51,16 @@ def transform_record(properties, record, date_format="%d/%m/%Y"):
                 record[key] = None if record[key] == "" else float(record[key])
 
             if prop.get("format") == "date":
-                record[key] = (
-                    None
-                    if record[key] == "" or record[key] == "00/00/00"
-                    else format_date(parse_date(record[key], date_format), "%Y-%m-%d")
-                )
+                try:
+                    record[key] = (
+                        None
+                        if record[key] == "" or record[key] == "00/00/00"
+                        else format_date(
+                            parse_date(record[key], date_format), "%Y-%m-%d"
+                        )
+                    )
+                except:
+                    record[key] = None
     return record
 
 
