@@ -19,7 +19,7 @@ def handle_job_details(resource, schema, state, mdata, folder_path):
     bookmark = get_bookmark(state, resource, "since")
     properties = schema["properties"]
 
-    files = list_files(folder_path, resource)
+    files = list_files(folder_path + resource)
     to_sync = (
         [file for (file, time) in files]
         if bookmark == None

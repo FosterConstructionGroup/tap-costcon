@@ -4,11 +4,8 @@ import hashlib
 import csv
 
 
-def list_files(folder_path, resource):
-    paths = [
-        path.join(folder_path, resource, fl)
-        for fl in listdir(path.join(folder_path, resource))
-    ]
+def list_files(folder_path):
+    paths = [path.join(folder_path, fl) for fl in listdir(path.join(folder_path))]
     return [(p, path.getmtime(p)) for p in paths]
 
 
