@@ -30,22 +30,28 @@ def handle_job_details(resource, schema, state, mdata, folder_path):
         ]
     )
 
+    # many duplicate records; way faster to deduplicate in memory than to send to Redshift
+    # small performance hit for a batch with one file but massive performance improvements otherwise
+    unique = {}
+    for file in to_sync:
+        mappings = {
+            "Job": "job_number",
+            "Date2 ProjectOpen": "date_project_open",
+            "SiteManager": "site_manager",
+            "QuantitySurveyorCode": "quantity_surveyor_code",
+            "Date6 PracticalCompletion": "date_practical_completion",
+        }
+
+        records = parse_csv(file, mappings=mappings)
+
+        for record in records:
+            row = transform_record(properties, record)
+            unique[row["job_number"]] = row
+
     with metrics.record_counter(resource) as counter:
-        for file in to_sync:
-            mappings = {
-                "Job": "job_number",
-                "Date2 ProjectOpen": "date_project_open",
-                "SiteManager": "site_manager",
-                "QuantitySurveyorCode": "quantity_surveyor_code",
-                "Date6 PracticalCompletion": "date_practical_completion",
-            }
-
-            records = parse_csv(file, mappings=mappings)
-
-            for record in records:
-                row = transform_record(properties, record)
-                write_record(row, resource, schema, mdata, extraction_time)
-                counter.increment()
+        for row in unique.values():
+            write_record(row, resource, schema, mdata, extraction_time)
+            counter.increment()
     return write_bookmark(state, resource, extraction_time)
 
 
