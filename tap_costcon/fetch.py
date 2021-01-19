@@ -2,7 +2,6 @@ import singer
 import singer.metrics as metrics
 from singer import metadata
 from singer.bookmarks import get_bookmark
-from os import path
 from datetime import datetime
 from tap_costcon.utility import (
     list_files,
@@ -15,7 +14,7 @@ from tap_costcon.utility import (
 
 
 def handle_job_details(resource, schema, state, mdata, folder_path):
-    extraction_time = singer.utils.now()
+    extraction_time = datetime.now()
     bookmark = get_bookmark(state, resource, "since")
     properties = schema["properties"]
 
@@ -33,6 +32,7 @@ def handle_job_details(resource, schema, state, mdata, folder_path):
     # many duplicate records; way faster to deduplicate in memory than to send to Redshift
     # small performance hit for a batch with one file but massive performance improvements otherwise
     unique = {}
+
     for file in to_sync:
         mappings = {
             "Job": "job_number",
