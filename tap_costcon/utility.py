@@ -2,6 +2,7 @@ from os import listdir, path
 from datetime import datetime
 import hashlib
 import csv
+import pytz
 
 
 def list_files(folder_path):
@@ -18,6 +19,12 @@ def parse_date(dt, format=time_format):
 
 def format_date(dt, format=time_format):
     return datetime.strftime(dt, format)
+
+
+def get_time():
+    tz = pytz.timezone("Pacific/Auckland")
+    now = datetime.now()
+    return tz.localize(now)
 
 
 def hash(s):

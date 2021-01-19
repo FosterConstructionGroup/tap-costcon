@@ -7,6 +7,7 @@ from tap_costcon.utility import (
     list_files,
     parse_date,
     format_date,
+    get_time,
     hash,
     parse_csv,
     transform_record,
@@ -14,7 +15,7 @@ from tap_costcon.utility import (
 
 
 def handle_job_details(resource, schema, state, mdata, folder_path):
-    extraction_time = datetime.now()
+    extraction_time = get_time()
     bookmark = get_bookmark(state, resource, "since")
     properties = schema["properties"]
 
