@@ -2,7 +2,7 @@
   "type": ["null", "object"],
   "additionalProperties": false,
   "properties": {
-    "id": { "type": ["string"] },
+    "index": { "type": ["number"] },
     "client_code": { "type": ["string"] },
     "company_code": { "type": ["string"] },
     "status": { "type": ["string"] },
