@@ -14,8 +14,11 @@ from tap_costcon.utility import (
 )
 
 
-# note that unique_key is overridden by use_index and id_function
 def handle_generic(mappings=None, use_index=False, id_function=None, unique_key=None):
+    unique_key_name = (
+        "index" if use_index else "id" if id_function is not None else unique_key
+    )
+
     def do_generic(resource, schema, state, mdata, folder_path):
         extraction_time = get_time()
         bookmark = get_bookmark(state, resource, "since")
@@ -52,13 +55,10 @@ def handle_generic(mappings=None, use_index=False, id_function=None, unique_key=
                 if use_index:
                     index += 1
                     row["index"] = index
-                    unique_key = "index"
-
-                if id_function is not None:
+                elif id_function is not None:
                     row["id"] = id_function(row)
-                    unique_key = "id"
 
-                unique[row[unique_key]] = row
+                unique[row[unique_key_name]] = row
 
         with metrics.record_counter(resource) as counter:
             for row in unique.values():
