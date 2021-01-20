@@ -13,5 +13,7 @@ HANDLERS = {
         },
         unique_key="job_number",
     ),
-    "debtor_transactions": handle_generic(use_index=True),
+    "debtor_transactions": handle_generic(
+        use_index=True, trim_columns=["transaction_description"]
+    ),
 }

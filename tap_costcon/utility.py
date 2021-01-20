@@ -49,8 +49,11 @@ def parse_csv(path, delimiter=",", mappings={}, skip=0):
         return [dict(zip(headers, r)) for r in rows]
 
 
-def transform_record(properties, record, date_format="%d/%m/%Y"):
+def transform_record(properties, record, date_format="%d/%m/%Y", trim_columns=[]):
     for key in record:
+        if key in trim_columns:
+            record[key] = record[key][:1000]
+
         if key in properties:
             prop = properties.get(key)
             # numbers come through as strings

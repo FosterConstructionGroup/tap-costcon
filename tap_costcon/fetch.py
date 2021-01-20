@@ -14,7 +14,9 @@ from tap_costcon.utility import (
 )
 
 
-def handle_generic(mappings=None, use_index=False, id_function=None, unique_key=None):
+def handle_generic(
+    mappings=None, use_index=False, id_function=None, unique_key=None, trim_columns=[]
+):
     unique_key_name = (
         "index" if use_index else "id" if id_function is not None else unique_key
     )
@@ -51,7 +53,7 @@ def handle_generic(mappings=None, use_index=False, id_function=None, unique_key=
             index = 0
 
             for record in records:
-                row = transform_record(properties, record)
+                row = transform_record(properties, record, trim_columns=trim_columns)
 
                 if use_index:
                     index += 1
