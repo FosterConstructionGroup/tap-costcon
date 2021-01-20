@@ -14,46 +14,59 @@ from tap_costcon.utility import (
 )
 
 
-def handle_job_details(resource, schema, state, mdata, folder_path):
-    extraction_time = get_time()
-    bookmark = get_bookmark(state, resource, "since")
-    properties = schema["properties"]
+# note that unique_key is overridden by use_index and id_function
+def handle_generic(mappings=None, use_index=False, id_function=None, unique_key=None):
+    def do_generic(resource, schema, state, mdata, folder_path):
+        extraction_time = get_time()
+        bookmark = get_bookmark(state, resource, "since")
+        properties = schema["properties"]
 
-    files = list_files(folder_path + resource)
-    to_sync = (
-        [file for (file, time) in files]
-        if bookmark == None
-        else [
-            file
-            for (file, time) in files
-            if datetime.fromtimestamp(time) > parse_date(bookmark)
-        ]
-    )
+        files = list_files(folder_path + resource)
+        to_sync = (
+            [file for (file, time) in files]
+            if bookmark == None
+            else [
+                file
+                for (file, time) in files
+                if datetime.fromtimestamp(time) > parse_date(bookmark)
+            ]
+        )
 
-    # many duplicate records; way faster to deduplicate in memory than to send to Redshift
-    # small performance hit for a batch with one file but massive performance improvements otherwise
-    unique = {}
+        # many duplicate records; way faster to deduplicate in memory than to send to Redshift
+        # small performance hit for a batch with one file but massive performance improvements otherwise
+        unique = {}
 
-    for file in to_sync:
-        mappings = {
-            "Job": "job_number",
-            "Date2 ProjectOpen": "date_project_open",
-            "SiteManager": "site_manager",
-            "QuantitySurveyorCode": "quantity_surveyor_code",
-            "Date6 PracticalCompletion": "date_practical_completion",
-        }
+        # initialise index in case it's used in future
+        # could conditionally initialise, but linter warns about potentially unbound variable so this fixes that warning
+        index = 0
 
-        records = parse_csv(file, mappings=mappings)
+        for file in to_sync:
+            if mappings is not None:
+                records = parse_csv(file, mappings=mappings)
+            else:
+                records = parse_csv(file)
 
-        for record in records:
-            row = transform_record(properties, record)
-            unique[row["job_number"]] = row
+            for record in records:
+                row = transform_record(properties, record)
 
-    with metrics.record_counter(resource) as counter:
-        for row in unique.values():
-            write_record(row, resource, schema, mdata, extraction_time)
-            counter.increment()
-    return write_bookmark(state, resource, extraction_time)
+                if use_index:
+                    index += 1
+                    row["index"] = index
+                    unique_key = "index"
+
+                if id_function is not None:
+                    row["id"] = id_function(row)
+                    unique_key = "id"
+
+                unique[row[unique_key]] = row
+
+        with metrics.record_counter(resource) as counter:
+            for row in unique.values():
+                write_record(row, resource, schema, mdata, extraction_time)
+                counter.increment()
+        return write_bookmark(state, resource, extraction_time)
+
+    return do_generic
 
 
 # More convenient to use but has to all be held in memory, so use write_record instead for resources with many rows

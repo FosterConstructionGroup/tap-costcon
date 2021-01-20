@@ -61,11 +61,14 @@ def transform_record(properties, record, date_format="%d/%m/%Y"):
                 if record[key] == "" or record[key] == "00/00/00":
                     record[key] = None
                 else:
-                    dt = parse_date(record[key], date_format)
-                    # %04Y zero-pads years like 216 to 0216 so they don't fail SQL ingestion
-                    record[key] = (
-                        None if dt.year < 2000 else format_date(dt, "%04Y-%m-%d")
-                    )
+                    try:
+                        dt = parse_date(record[key], date_format)
+                        # %04Y zero-pads years like 216 to 0216 so they don't fail SQL ingestion
+                        record[key] = (
+                            None if dt.year < 2000 else format_date(dt, "%04Y-%m-%d")
+                        )
+                    except:
+                        record[key] = None
 
     return record
 
