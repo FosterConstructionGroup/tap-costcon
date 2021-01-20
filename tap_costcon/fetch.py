@@ -39,15 +39,16 @@ def handle_generic(mappings=None, use_index=False, id_function=None, unique_key=
         # small performance hit for a batch with one file but massive performance improvements otherwise
         unique = {}
 
-        # initialise index in case it's used in future
-        # could conditionally initialise, but linter warns about potentially unbound variable so this fixes that warning
-        index = 0
-
         for file in to_sync:
             if mappings is not None:
                 records = parse_csv(file, mappings=mappings)
             else:
                 records = parse_csv(file)
+
+            # initialise index in case it's used in future
+            # needs to reset for every new file, as it's acting as a proxy ID
+            # could conditionally initialise, but linter warns about potentially unbound variable so this fixes that warning
+            index = 0
 
             for record in records:
                 row = transform_record(properties, record)
