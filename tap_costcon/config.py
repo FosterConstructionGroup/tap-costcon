@@ -1,6 +1,10 @@
 from tap_costcon.fetch import handle_generic
 
-ID_FIELDS = {"job_details": ["job_number"], "debtor_transactions": ["index"]}
+ID_FIELDS = {
+    "job_details": ["job_number"],
+    "debtor_transactions": ["index"],
+    "cost_transactions": ["ct_guid"],
+}
 
 HANDLERS = {
     "job_details": handle_generic(
@@ -16,4 +20,5 @@ HANDLERS = {
     "debtor_transactions": handle_generic(
         use_index=True, trim_columns=["transaction_description"]
     ),
+    "cost_transactions": handle_generic(unique_key="ct_guid"),
 }

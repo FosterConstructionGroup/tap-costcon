@@ -1,0 +1,37 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "ct_guid": { "type": ["string"] },
+    "job_number": { "type": ["null", "string"] },
+    "company_code": { "type": ["null", "string"] },
+    "ct_created_timestamp": { "type": ["string"], "format": "date-time" },
+    "ct_modified_timestamp": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "status": { "type": ["string"] },
+    "subcategory_code": { "type": ["null", "string"] },
+    "subcategory_description": { "type": ["null", "string"] },
+    "added_by": { "type": ["string"] },
+    "cost_quantity": { "type": ["number"] },
+    "cost_rate": { "type": ["number"] },
+    "cost_value": { "type": ["number"] },
+    "tax_amount": { "type": ["number"] },
+    "tax_exclusive_amount_net": { "type": ["number"] },
+    "remaining_net_retention": { "type": ["number"] },
+    "type": { "type": ["string"] },
+    "gl_code": { "type": ["number"] },
+    "gl_company": { "type": ["string"] },
+    "post_date": { "type": ["null", "string"], "format": "date" },
+    "reversed": { "type": ["null", "string"] },
+    "tax_code": { "type": ["null", "string"] },
+    "purchase_order": { "type": ["null", "string"] },
+    "reference": { "type": ["null", "string"] },
+    "variation_order_number": { "type": ["null", "string"] },
+    "calculated_sell_qty": { "type": ["number"] },
+    "calculated_sell_rate": { "type": ["number"] },
+    "calculated_sell_value_(mu)": { "type": ["number"] },
+    "calculated_sell_value_(ob)": { "type": ["number"] }
+  }
+}

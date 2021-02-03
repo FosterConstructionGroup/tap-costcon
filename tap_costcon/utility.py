@@ -51,27 +51,35 @@ def parse_csv(path, delimiter=",", mappings={}, skip=0):
 
 def transform_record(properties, record, date_format="%d/%m/%Y", trim_columns=[]):
     for key in record:
+        val = record[key]
+
         if key in trim_columns:
-            record[key] = record[key][:1000]
+            record[key] = val[:1000]
 
         if key in properties:
             prop = properties.get(key)
             # numbers come through as strings
             if prop.get("type")[-1] == "number":
-                record[key] = None if record[key] == "" else float(record[key])
+                val = None if val == "" else float(record[key])
 
             if prop.get("format") == "date":
-                if record[key] == "" or record[key] == "00/00/00":
+                if val == "" or val == "00/00/00":
                     record[key] = None
                 else:
                     try:
-                        dt = parse_date(record[key], date_format)
+                        dt = parse_date(val, date_format)
                         # %04Y zero-pads years like 216 to 0216 so they don't fail SQL ingestion
                         record[key] = (
                             None if dt.year < 2000 else format_date(dt, "%04Y-%m-%d")
                         )
                     except:
                         record[key] = None
+            elif prop.get("format") == "date-time":
+                # only handling timestamps for now; update in future as required
+                if int(val) < 0:
+                    record[key] = None
+                else:
+                    record[key] = format_date(datetime.fromtimestamp(int(val)))
 
     return record
 
