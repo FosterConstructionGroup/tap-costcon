@@ -1,12 +1,22 @@
 from tap_costcon.fetch import handle_generic
 
 ID_FIELDS = {
-    "job_details": ["job_number"],
-    "debtor_transactions": ["index"],
     "cost_transactions": ["ct_guid"],
+    "debtor_transactions": ["index"],
+    "job_details": ["job_number"],
 }
 
 HANDLERS = {
+    "cost_transactions": handle_generic(
+        unique_key="ct_guid", date_column="ct_modified_timestamp"
+    ),
+    "debtor_transactions": handle_generic(
+        use_index=True,
+        trim_columns=["transaction_description"],
+        # date_modified is mostly null, and rows can't be edited once posted
+        date_column="date_posted",
+        date_column_type="date",
+    ),
     "job_details": handle_generic(
         mappings={
             "Job": "job_number",
@@ -18,15 +28,5 @@ HANDLERS = {
         unique_key="job_number",
         date_column="date_modified",
         date_column_type="date",
-    ),
-    "debtor_transactions": handle_generic(
-        use_index=True,
-        trim_columns=["transaction_description"],
-        # date_modified is mostly null, and rows can't be edited once posted
-        date_column="date_posted",
-        date_column_type="date",
-    ),
-    "cost_transactions": handle_generic(
-        unique_key="ct_guid", date_column="ct_modified_timestamp"
     ),
 }
