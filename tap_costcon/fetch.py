@@ -15,7 +15,13 @@ from tap_costcon.utility import (
 
 
 def handle_generic(
-    mappings=None, use_index=False, id_function=None, unique_key=None, trim_columns=[]
+    mappings=None,
+    use_index=False,
+    id_function=None,
+    unique_key=None,
+    trim_columns=[],
+    date_column=None,
+    date_column_type="timestamp",
 ):
     unique_key_name = (
         "index" if use_index else "id" if id_function is not None else unique_key
@@ -24,6 +30,13 @@ def handle_generic(
     def do_generic(resource, schema, state, mdata, folder_path):
         extraction_time = get_time()
         bookmark = get_bookmark(state, resource, "since")
+        parsed_bookmark = (
+            None
+            if bookmark is None or date_column is None
+            else parse_date(bookmark)
+            if date_column_type == "timestamp"
+            else datetime.date(parse_date(bookmark))
+        )
         properties = schema["properties"]
 
         files = list_files(folder_path + resource)
@@ -54,6 +67,22 @@ def handle_generic(
 
             for record in records:
                 row = transform_record(properties, record, trim_columns=trim_columns)
+
+                # row-level filtering where possible
+                parsed_date_column = (
+                    None
+                    if bookmark is None
+                    or date_column is None
+                    or row[date_column] is None
+                    else parse_date(row[date_column])
+                    if date_column_type == "timestamp"
+                    else datetime.date(parse_date(row[date_column], "%Y-%m-%d"))
+                )
+                if (
+                    parsed_date_column is not None
+                    and parsed_date_column < parsed_bookmark
+                ):
+                    continue
 
                 if use_index:
                     index += 1
