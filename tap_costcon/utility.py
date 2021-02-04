@@ -75,11 +75,16 @@ def transform_record(properties, record, date_format="%d/%m/%Y", trim_columns=[]
                     except:
                         record[key] = None
             elif prop.get("format") == "date-time":
-                # only handling timestamps for now; update in future as required
-                if int(val) < 0:
+                if val == None:
                     record[key] = None
                 else:
-                    record[key] = format_date(datetime.fromtimestamp(int(val)))
+                    try:
+                        if int(val) < 0:
+                            record[key] = None
+                        else:
+                            record[key] = format_date(datetime.fromtimestamp(int(val)))
+                    except:
+                        record[key] = format_date(parse_date(val))
 
     return record
 
