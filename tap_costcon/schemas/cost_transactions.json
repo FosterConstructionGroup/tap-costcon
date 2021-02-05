@@ -5,7 +5,10 @@
     "ct_guid": { "type": ["string"] },
     "job_number": { "type": ["null", "string"] },
     "company_code": { "type": ["null", "string"] },
-    "ct_created_timestamp": { "type": ["string"], "format": "date-time" },
+    "ct_created_timestamp": {
+      "type": ["string"],
+      "format": "date-time"
+    },
     "ct_modified_timestamp": {
       "type": ["null", "string"],
       "format": "date-time"

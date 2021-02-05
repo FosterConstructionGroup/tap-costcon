@@ -2,13 +2,19 @@
   "type": ["null", "object"],
   "additionalProperties": false,
   "properties": {
-    "index": { "type": ["number"] },
+    "ct_guid": { "type": ["string"] },
     "client_code": { "type": ["string"] },
     "company_code": { "type": ["string"] },
     "status": { "type": ["string"] },
     "transaction_date": { "type": ["null", "string"], "format": "date" },
-    "date_added": { "type": ["null", "string"], "format": "date" },
-    "date_modified": { "type": ["null", "string"], "format": "date" },
+    "ct_created_timestamp": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "ct_modified_timestamp": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
     "date_posted": { "type": ["null", "string"], "format": "date" },
     "due_date": { "type": ["null", "string"], "format": "date" },
     "payment_terms": { "type": ["null", "string"] },

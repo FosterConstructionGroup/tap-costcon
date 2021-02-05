@@ -3,7 +3,7 @@ from tap_costcon.fetch import handle_generic
 ID_FIELDS = {
     "contacts": ["contact_code"],
     "cost_transactions": ["ct_guid"],
-    "debtor_transactions": ["index"],
+    "debtor_transactions": ["ct_guid"],
     "job_details": ["job_number"],
 }
 
@@ -15,11 +15,10 @@ HANDLERS = {
         unique_key="ct_guid", date_column="ct_modified_timestamp"
     ),
     "debtor_transactions": handle_generic(
-        use_index=True,
+        unique_key="ct_guid",
         trim_columns=["transaction_description"],
         # date_modified is mostly null, and rows can't be edited once posted
-        date_column="date_posted",
-        date_column_type="date",
+        date_column="ct_modified_timestamp",
     ),
     "job_details": handle_generic(
         mappings={

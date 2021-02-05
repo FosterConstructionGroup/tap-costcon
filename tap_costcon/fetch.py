@@ -16,16 +16,13 @@ from tap_costcon.utility import (
 
 def handle_generic(
     mappings=None,
-    use_index=False,
     id_function=None,
     unique_key=None,
     trim_columns=[],
     date_column=None,
     date_column_type="timestamp",
 ):
-    unique_key_name = (
-        "index" if use_index else "id" if id_function is not None else unique_key
-    )
+    unique_key_name = "id" if id_function is not None else unique_key
 
     def do_generic(resource, schema, state, mdata, folder_path):
         extraction_time = get_time()
@@ -60,11 +57,6 @@ def handle_generic(
             else:
                 records = parse_csv(file)
 
-            # initialise index in case it's used in future
-            # needs to reset for every new file, as it's acting as a proxy ID
-            # could conditionally initialise, but linter warns about potentially unbound variable so this fixes that warning
-            index = 0
-
             for record in records:
                 row = transform_record(properties, record, trim_columns=trim_columns)
 
@@ -84,10 +76,7 @@ def handle_generic(
                 ):
                     continue
 
-                if use_index:
-                    index += 1
-                    row["index"] = index
-                elif id_function is not None:
+                if id_function is not None:
                     row["id"] = id_function(row)
 
                 unique[row[unique_key_name]] = row
