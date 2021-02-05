@@ -1,0 +1,19 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "contact_code": { "type": ["string"] },
+    "legal_name": { "type": ["null", "string"] },
+    "trading_name": { "type": ["null", "string"] },
+    "contact_name": { "type": ["null", "string"] },
+    "ct_created_timestamp": { "type": ["string"], "format": "date-time" },
+    "ct_modified_timestamp": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "postal_code": { "type": ["null", "string"] },
+    "trade_display": { "type": ["null", "string"] },
+    "type_creditor": { "type": ["null", "boolean"] },
+    "type_debtor": { "type": ["null", "boolean"] }
+  }
+}
