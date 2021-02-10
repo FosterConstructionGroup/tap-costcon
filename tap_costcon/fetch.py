@@ -80,7 +80,7 @@ def handle_generic(
                     row["id"] = id_function(row)
 
                 # the primary key should never be blank
-                if row[unique_key_name] is None:
+                if row[unique_key_name] is None or row[unique_key_name] == "":
                     continue
 
                 unique[row[unique_key_name]] = row
