@@ -79,6 +79,10 @@ def handle_generic(
                 if id_function is not None:
                     row["id"] = id_function(row)
 
+                # the primary key should never be blank
+                if row[unique_key_name] is None:
+                    continue
+
                 unique[row[unique_key_name]] = row
 
         with metrics.record_counter(resource) as counter:
