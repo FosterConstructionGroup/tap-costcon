@@ -7,7 +7,9 @@ import pytz
 
 def list_files(folder_path):
     paths = [path.join(folder_path, fl) for fl in listdir(path.join(folder_path))]
-    return [(p, path.getmtime(p)) for p in paths]
+    files = [(p, path.getmtime(p)) for p in paths]
+    files.sort(key=lambda x: x[1])
+    return files
 
 
 time_format = "%Y-%m-%dT%H:%M:%SZ"
