@@ -1,9 +1,11 @@
 from tap_costcon.fetch import handle_generic
+from tap_costcon.utility import set_blank_date_modified_to_date_added
 
 ID_FIELDS = {
     "contacts": ["contact_code"],
     "cost_transactions": ["ct_guid"],
     "debtor_transactions": ["ct_guid"],
+    "job_costs_inquiry": ["ct_guid"],
     "job_details": ["job_number"],
 }
 
@@ -19,6 +21,15 @@ HANDLERS = {
         trim_columns=["transaction_description"],
         # date_modified is mostly null, and rows can't be edited once posted
         date_column="ct_modified_timestamp",
+    ),
+    "job_costs_inquiry": handle_generic(
+        unique_key="ct_guid",
+        mappings={
+            "Job": "job_number",
+            "VO#": "variation_order_number",
+            "Job Variation Order GUID": "variation_order_guid",
+        },
+        after_transform=set_blank_date_modified_to_date_added,
     ),
     "job_details": handle_generic(
         mappings={

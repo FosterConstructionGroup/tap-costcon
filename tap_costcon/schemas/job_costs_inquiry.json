@@ -1,0 +1,16 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "ct_guid": { "type": ["string"] },
+    "job_number": { "type": ["string"] },
+    "supplier": { "type": ["null", "string"] },
+    "subcat": { "type": ["string"] },
+    "description": { "type": ["string"] },
+    "variation_order_number": { "type": ["string"] },
+    "variation_order_guid": { "type": ["string"] },
+    "date_added": { "type": ["null", "string"], "format": "date" },
+    "date_modified": { "type": ["null", "string"], "format": "date" },
+    "appointed": { "type": ["number"] }
+  }
+}
