@@ -30,6 +30,8 @@ HANDLERS = {
             "Job Variation Order GUID": "variation_order_guid",
         },
         after_transform=set_blank_date_modified_to_date_added,
+        date_column="date_modified",
+        date_column_type="date",
     ),
     "job_details": handle_generic(
         mappings={
