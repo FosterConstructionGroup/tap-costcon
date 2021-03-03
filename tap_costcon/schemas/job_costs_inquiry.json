@@ -9,8 +9,14 @@
     "description": { "type": ["string"] },
     "variation_order_number": { "type": ["string"] },
     "variation_order_guid": { "type": ["string"] },
-    "date_added": { "type": ["null", "string"], "format": "date" },
-    "date_modified": { "type": ["null", "string"], "format": "date" },
+    "ct_created_timestamp": {
+      "type": ["string"],
+      "format": "date-time"
+    },
+    "ct_modified_timestamp": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
     "appointed": { "type": ["number"] }
   }
 }
