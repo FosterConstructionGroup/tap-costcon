@@ -97,9 +97,3 @@ def get_abs_path(p):
 
 def transform_column_name(s):
     return s.strip().replace(" ", "_").lower().replace("/", "_or_")
-
-
-def set_blank_date_modified_to_date_added(row):
-    if row["date_modified"] is None:
-        row["date_modified"] = row["date_added"]
-    return row

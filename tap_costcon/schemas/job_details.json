@@ -12,17 +12,18 @@
     "invoice_type": { "type": ["string"] },
     "job_type": { "type": ["string"] },
     "status": { "type": ["string"] },
-    "date_project_open": { "type": ["null", "string"], "format": "date" },
     "site_manager": { "type": ["null", "string"] },
     "quantity_surveyor_code": { "type": ["null", "string"] },
+    "date_project_open": { "type": ["null", "string"], "format": "date" },
     "date_practical_completion": {
       "type": ["null", "string"],
       "format": "date"
     },
-    "date_added": { "type": ["null", "string"], "format": "date" },
-    "date_modified": { "type": ["null", "string"], "format": "date" },
-    "time_added": { "type": ["string"], "format": "time" },
-    "time_modified": { "type": ["string"], "format": "time" },
+    "ct_created_timestamp": { "type": ["string"], "format": "date-time" },
+    "ct_modified_timestamp": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
     "branch_id": { "type": ["number"] }
   }
 }

@@ -21,7 +21,6 @@ def handle_generic(
     trim_columns=[],
     date_column=None,
     date_column_type="timestamp",
-    after_transform=None,
 ):
     unique_key_name = "id" if id_function is not None else unique_key
 
@@ -60,9 +59,6 @@ def handle_generic(
 
             for record in records:
                 row = transform_record(properties, record, trim_columns=trim_columns)
-
-                if after_transform:
-                    row = after_transform(row)
 
                 # row-level filtering where possible
                 parsed_date_column = (
