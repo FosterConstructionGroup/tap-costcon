@@ -27,6 +27,8 @@
       "type": ["null", "string"],
       "format": "date-time"
     },
-    "branch_id": { "type": ["number"] }
+    "branch_id": { "type": ["number"] },
+    "contract_value": { "type": ["number"] },
+    "variations_contract_value": { "type": ["number"] }
   }
 }
