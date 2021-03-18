@@ -17,6 +17,7 @@
       "type": ["null", "string"],
       "format": "date-time"
     },
-    "appointed": { "type": ["number"] }
+    "appointed": { "type": ["number"] },
+    "t_contract_value": { "type": ["number"] }
   }
 }
