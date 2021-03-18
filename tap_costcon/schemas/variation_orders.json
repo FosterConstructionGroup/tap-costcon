@@ -1,0 +1,24 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "ct_guid": { "type": ["string"] },
+    "company_code": { "type": ["string"] },
+    "variation_order_number": { "type": ["string"] },
+    "ct_created_timestamp": {
+      "type": ["string"],
+      "format": "date-time"
+    },
+    "ct_modified_timestamp": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "is_a_company_variation_order": { "type": ["boolean"] },
+    "job_number": { "type": ["string"] },
+    "customer_order_number": { "type": ["null", "string"] },
+    "site_instruction_refererence": { "type": ["null", "string"] },
+    "refererence_2": { "type": ["null", "string"] },
+    "refererence_3": { "type": ["null", "string"] },
+    "description": { "type": ["null", "string"] }
+  }
+}
