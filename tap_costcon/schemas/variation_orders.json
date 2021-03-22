@@ -16,6 +16,7 @@
     "is_a_company_variation_order": { "type": ["boolean"] },
     "job_number": { "type": ["string"] },
     "customer_order_number": { "type": ["null", "string"] },
+    "status": { "type": ["null", "string"] },
     "site_instruction_refererence": { "type": ["null", "string"] },
     "refererence_2": { "type": ["null", "string"] },
     "refererence_3": { "type": ["null", "string"] },
