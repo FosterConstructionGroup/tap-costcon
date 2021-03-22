@@ -1,0 +1,16 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "code": { "type": ["string"] },
+    "description": { "type": ["string"] },
+    "inactive": { "type": ["boolean"] },
+    "subcategory_classification": { "type": ["string"] },
+    "category_code": { "type": ["string"] },
+    "ct_created_timestamp": { "type": ["string"], "format": "date-time" },
+    "ct_modified_timestamp": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    }
+  }
+}

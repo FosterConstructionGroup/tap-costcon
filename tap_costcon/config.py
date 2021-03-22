@@ -1,16 +1,22 @@
 from tap_costcon.fetch import handle_generic
 
 ID_FIELDS = {
+    "categories": ["code"],
     "contacts": ["contact_code"],
     "cost_transactions": ["ct_guid"],
     "debtor_transactions": ["ct_guid"],
     "job_costs_inquiry": ["ct_guid"],
     "job_details": ["job_number"],
     "job_subcontractors": ["ct_guid"],
+    "subcategories": ["code"],
     "variation_orders": ["ct_guid"],
 }
 
 HANDLERS = {
+    "categories": handle_generic(
+        unique_key="code",
+        date_column="ct_modified_timestamp",
+    ),
     "contacts": handle_generic(
         unique_key="contact_code", date_column="ct_modified_timestamp"
     ),
@@ -45,6 +51,10 @@ HANDLERS = {
     ),
     "job_subcontractors": handle_generic(
         unique_key="ct_guid",
+        date_column="ct_modified_timestamp",
+    ),
+    "subcategories": handle_generic(
+        unique_key="code",
         date_column="ct_modified_timestamp",
     ),
     "variation_orders": handle_generic(
