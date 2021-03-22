@@ -6,6 +6,7 @@ ID_FIELDS = {
     "debtor_transactions": ["ct_guid"],
     "job_costs_inquiry": ["ct_guid"],
     "job_details": ["job_number"],
+    "job_subcontractors": ["ct_guid"],
     "variation_orders": ["ct_guid"],
 }
 
@@ -40,6 +41,10 @@ HANDLERS = {
             "Date6 PracticalCompletion": "date_practical_completion",
         },
         unique_key="job_number",
+        date_column="ct_modified_timestamp",
+    ),
+    "job_subcontractors": handle_generic(
+        unique_key="ct_guid",
         date_column="ct_modified_timestamp",
     ),
     "variation_orders": handle_generic(
