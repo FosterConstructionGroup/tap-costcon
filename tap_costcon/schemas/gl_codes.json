@@ -1,0 +1,22 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "ct_guid": { "type": ["string"] },
+    "gl_code": { "type": ["string"] },
+    "gl_description": { "type": ["string"] },
+    "ct_created_timestamp": {
+      "type": ["string"],
+      "format": "date-time"
+    },
+    "ct_modified_timestamp": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "bank_account": { "type": ["boolean"] },
+    "gl_company_code": { "type": ["string"] },
+    "control_account": { "type": ["boolean"] },
+    "gst_rate_code_description": { "type": ["string"] },
+    "inactive": { "type": ["boolean"] }
+  }
+}

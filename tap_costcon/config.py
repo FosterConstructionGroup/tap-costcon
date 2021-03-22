@@ -5,6 +5,7 @@ ID_FIELDS = {
     "contacts": ["contact_code"],
     "cost_transactions": ["ct_guid"],
     "debtor_transactions": ["ct_guid"],
+    "gl_codes": ["ct_guid"],
     "job_costs_inquiry": ["ct_guid"],
     "job_details": ["job_number"],
     "job_subcontractors": ["ct_guid"],
@@ -27,6 +28,10 @@ HANDLERS = {
         unique_key="ct_guid",
         trim_columns=["transaction_description"],
         # date_modified is mostly null, and rows can't be edited once posted
+        date_column="ct_modified_timestamp",
+    ),
+    "gl_codes": handle_generic(
+        unique_key="ct_guid",
         date_column="ct_modified_timestamp",
     ),
     "job_costs_inquiry": handle_generic(
