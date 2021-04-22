@@ -4,6 +4,7 @@
   "properties": {
     "ct_guid": { "type": ["string"] },
     "job_number": { "type": ["null", "string"] },
+    "client_code": { "type": ["null", "string"] },
     "company_code": { "type": ["null", "string"] },
     "ct_created_timestamp": {
       "type": ["string"],
