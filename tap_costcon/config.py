@@ -7,6 +7,7 @@ ID_FIELDS = {
     "debtor_transactions": ["ct_guid"],
     "debtor_transaction_lines": ["ct_guid"],
     "gl_codes": ["ct_guid"],
+    "gl_lines": ["ct_guid"],
     "job_costs_inquiry": ["ct_guid"],
     "job_details": ["job_number"],
     "job_subcontractors": ["ct_guid"],
@@ -37,6 +38,10 @@ HANDLERS = {
         date_column="ct_modified_timestamp",
     ),
     "gl_codes": handle_generic(
+        unique_key="ct_guid",
+        date_column="ct_modified_timestamp",
+    ),
+    "gl_lines": handle_generic(
         unique_key="ct_guid",
         date_column="ct_modified_timestamp",
     ),

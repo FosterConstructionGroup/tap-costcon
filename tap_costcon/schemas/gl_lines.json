@@ -1,0 +1,29 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "ct_guid": { "type": ["string"] },
+    "ct_created_timestamp": {
+      "type": ["string"],
+      "format": "date-time"
+    },
+    "ct_modified_timestamp": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "year": { "type": ["integer"] },
+    "period": { "type": ["integer"] },
+    "transaction_date": { "type": ["null", "string"], "format": "date" },
+    "transaction_type": { "type": ["string"] },
+    "gl_code": { "type": ["number"] },
+    "contact_code": { "type": ["null", "string"] },
+    "company_code": { "type": ["string"] },
+    "Job": { "type": ["null", "string"] },
+    "reference": { "type": ["null", "string"] },
+    "gst_rate_code": { "type": ["null", "string"] },
+    "net_amount_gst_applicable_to": { "type": ["number"] },
+    "amount": { "type": ["number"] },
+    "memo": { "type": ["null", "string"] },
+    "account_type_code": { "type": ["string"] }
+  }
+}
