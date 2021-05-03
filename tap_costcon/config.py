@@ -16,43 +16,22 @@ ID_FIELDS = {
 }
 
 HANDLERS = {
-    "categories": handle_generic(
-        unique_key="code",
-        date_column="ct_modified_timestamp",
-    ),
-    "contacts": handle_generic(
-        unique_key="contact_code", date_column="ct_modified_timestamp"
-    ),
-    "cost_transactions": handle_generic(
-        unique_key="ct_guid", date_column="ct_modified_timestamp"
-    ),
+    "categories": handle_generic(unique_key="code"),
+    "contacts": handle_generic(unique_key="contact_code"),
+    "cost_transactions": handle_generic(),
     "debtor_transactions": handle_generic(
-        unique_key="ct_guid",
         trim_columns=["transaction_description"],
         # date_modified is mostly null, and rows can't be edited once posted
-        date_column="ct_modified_timestamp",
     ),
-    "debtor_transaction_lines": handle_generic(
-        unique_key="ct_guid",
-        trim_columns=["line_description"],
-        date_column="ct_modified_timestamp",
-    ),
-    "gl_codes": handle_generic(
-        unique_key="ct_guid",
-        date_column="ct_modified_timestamp",
-    ),
-    "gl_lines": handle_generic(
-        unique_key="ct_guid",
-        date_column="ct_modified_timestamp",
-    ),
+    "debtor_transaction_lines": handle_generic(trim_columns=["line_description"]),
+    "gl_codes": handle_generic(),
+    "gl_lines": handle_generic(),
     "job_costs_inquiry": handle_generic(
-        unique_key="ct_guid",
         mappings={
             "Job": "job_number",
             "VO#": "variation_order_number",
             "Job Variation Order GUID": "variation_order_guid",
         },
-        date_column="ct_modified_timestamp",
     ),
     "job_details": handle_generic(
         mappings={
@@ -63,18 +42,8 @@ HANDLERS = {
             "Date6 PracticalCompletion": "date_practical_completion",
         },
         unique_key="job_number",
-        date_column="ct_modified_timestamp",
     ),
-    "job_subcontractors": handle_generic(
-        unique_key="ct_guid",
-        date_column="ct_modified_timestamp",
-    ),
-    "subcategories": handle_generic(
-        unique_key="code",
-        date_column="ct_modified_timestamp",
-    ),
-    "variation_orders": handle_generic(
-        unique_key="ct_guid",
-        date_column="ct_modified_timestamp",
-    ),
+    "job_subcontractors": handle_generic(),
+    "subcategories": handle_generic(unique_key="code"),
+    "variation_orders": handle_generic(),
 }

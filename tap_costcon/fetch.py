@@ -17,9 +17,9 @@ from tap_costcon.utility import (
 def handle_generic(
     mappings=None,
     id_function=None,
-    unique_key=None,
+    unique_key="ct_guid",
     trim_columns=[],
-    date_column=None,
+    date_column="ct_modified_timestamp",
     date_column_type="timestamp",
 ):
     unique_key_name = "id" if id_function is not None else unique_key

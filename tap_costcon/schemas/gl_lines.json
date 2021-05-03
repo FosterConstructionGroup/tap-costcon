@@ -18,7 +18,7 @@
     "gl_code": { "type": ["number"] },
     "contact_code": { "type": ["null", "string"] },
     "company_code": { "type": ["string"] },
-    "Job": { "type": ["null", "string"] },
+    "job": { "type": ["null", "string"] },
     "reference": { "type": ["null", "string"] },
     "gst_rate_code": { "type": ["null", "string"] },
     "net_amount_gst_applicable_to": { "type": ["number"] },
