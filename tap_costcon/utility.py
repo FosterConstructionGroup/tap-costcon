@@ -62,9 +62,8 @@ def transform_record(properties, record, date_format="%d/%m/%Y", trim_columns=[]
             prop = properties.get(key)
             # numbers come through as strings
             if prop.get("type")[-1] == "number":
-                val = None if val == "" else float(record[key])
-
-            if prop.get("format") == "date":
+                record[key] = None if val == "" else float(record[key])
+            elif prop.get("format") == "date":
                 if val == "" or val == "00/00/00":
                     record[key] = None
                 else:
@@ -87,6 +86,10 @@ def transform_record(properties, record, date_format="%d/%m/%Y", trim_columns=[]
                             record[key] = format_date(datetime.fromtimestamp(int(val)))
                     except:
                         record[key] = format_date(parse_date(val))
+            elif "boolean" in prop.get("type"):
+                record[key] = (
+                    True if val == "TRUE" else False if val == "FALSE" else None
+                )
 
     return record
 

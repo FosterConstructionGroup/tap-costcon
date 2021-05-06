@@ -29,7 +29,7 @@
     "gl_code": { "type": ["null", "number"] },
     "gl_company": { "type": ["null", "string"] },
     "post_date": { "type": ["null", "string"], "format": "date" },
-    "reversed": { "type": ["string"] },
+    "reversed": { "type": ["boolean"] },
     "tax_code": { "type": ["string"] },
     "purchase_order": { "type": ["null", "string"] },
     "reference": { "type": ["null", "string"] },
