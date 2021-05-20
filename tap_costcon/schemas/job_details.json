@@ -3,6 +3,7 @@
   "additionalProperties": false,
   "properties": {
     "job_number": { "type": ["string"] },
+    "consolidated_job_number": { "type": ["string"] },
     "company_code": { "type": ["null", "string"] },
     "manager": { "type": ["null", "string"] },
     "name": { "type": ["string"] },

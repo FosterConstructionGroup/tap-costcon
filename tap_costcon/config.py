@@ -1,4 +1,4 @@
-from tap_costcon.fetch import handle_generic
+from tap_costcon.fetch import handle_generic, transform_job_details
 
 ID_FIELDS = {
     "categories": ["code"],
@@ -42,6 +42,7 @@ HANDLERS = {
             "Date6 PracticalCompletion": "date_practical_completion",
         },
         unique_key="job_number",
+        transform_fn=transform_job_details
     ),
     "job_subcontractors": handle_generic(),
     "subcategories": handle_generic(unique_key="code"),

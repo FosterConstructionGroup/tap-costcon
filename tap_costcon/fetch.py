@@ -21,6 +21,7 @@ def handle_generic(
     trim_columns=[],
     date_column="ct_modified_timestamp",
     date_column_type="timestamp",
+    transform_fn=None,
 ):
     unique_key_name = "id" if id_function is not None else unique_key
 
@@ -76,6 +77,9 @@ def handle_generic(
                 ):
                     continue
 
+                if transform_fn is not None:
+                    row = transform_fn(row)
+
                 if id_function is not None:
                     row["id"] = id_function(row)
 
@@ -92,6 +96,23 @@ def handle_generic(
         return write_bookmark(state, resource, extraction_time)
 
     return do_generic
+
+
+def transform_job_details(row):
+    mapped = row["job_number"]
+
+    # Redshift doesn't have an easy try_cast function so can't do the try_except block below
+    # for specific conditions, see notes at https://www.notion.so/fosters/Board-reporting-f5d403ed64c44594873e9fcffec9a3ef#46b4428950834c7bafb94eb0fc22e9e9
+    # note that about 20 rows have null `ct_created_timestamp`, which is a data source error in Costcon. None of these are old jobs so can safely keep the original job_number
+    try:
+        year = int(row["ct_created_timestamp"][:4])
+        if row["company_code"] == "FOSTER" and year >= 2005:
+            mapped = int(mapped[:3])
+    except:
+        pass
+
+    row["consolidated_job_number"] = mapped
+    return row
 
 
 # More convenient to use but has to all be held in memory, so use write_record instead for resources with many rows
