@@ -15,6 +15,10 @@
       "type": ["null", "string"],
       "format": "date-time"
     },
+    "date_depending_on_transaction_type": {
+      "type": ["null", "string"],
+      "format": "date"
+    },
     "status": { "type": ["string"] },
     "subcategory_code": { "type": ["null", "string"] },
     "subcategory_description": { "type": ["null", "string"] },
