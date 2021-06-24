@@ -1,4 +1,4 @@
-from tap_costcon.fetch import handle_generic, transform_job_details
+from tap_costcon.fetch import handle_generic, transform_job_details, transform_gl_lines
 
 ID_FIELDS = {
     "categories": ["code"],
@@ -25,7 +25,7 @@ HANDLERS = {
     ),
     "debtor_transaction_lines": handle_generic(trim_columns=["line_description"]),
     "gl_codes": handle_generic(),
-    "gl_lines": handle_generic(),
+    "gl_lines": handle_generic(transform_fn=transform_gl_lines),
     "job_costs_inquiry": handle_generic(
         mappings={
             "Job": "job_number",
@@ -42,7 +42,7 @@ HANDLERS = {
             "Date6 PracticalCompletion": "date_practical_completion",
         },
         unique_key="job_number",
-        transform_fn=transform_job_details
+        transform_fn=transform_job_details,
     ),
     "job_subcontractors": handle_generic(),
     "subcategories": handle_generic(unique_key="code"),

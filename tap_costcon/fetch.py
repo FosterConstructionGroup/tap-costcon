@@ -9,6 +9,7 @@ from tap_costcon.utility import (
     format_date,
     get_time,
     hash,
+    construct_date,
     parse_csv,
     transform_record,
 )
@@ -112,6 +113,19 @@ def transform_job_details(row):
         pass
 
     row["consolidated_job_number"] = mapped
+    return row
+
+
+def transform_gl_lines(row):
+    # reconstruct date from financial year and period, because it's infrequently different and Costcon reporting is based on financial year and period
+    fy = int(row["year"])
+    period = int(row["period"])
+    day = int(row["transaction_date"][-2:])
+    year = fy if period > 9 else fy - 1
+    month = ((period + 2) % 12) + 1
+    dt = construct_date(year, month, day)
+    row["transaction_date"] = dt
+
     return row
 
 

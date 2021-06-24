@@ -1,5 +1,5 @@
 from os import listdir, path
-from datetime import datetime
+from datetime import datetime, date
 import hashlib
 import csv
 import pytz
@@ -21,6 +21,10 @@ def parse_date(dt, format=time_format):
 
 def format_date(dt, format=time_format):
     return datetime.strftime(dt, format)
+
+
+def construct_date(year, month, day):
+    return date(year, month, day)
 
 
 def get_time():
