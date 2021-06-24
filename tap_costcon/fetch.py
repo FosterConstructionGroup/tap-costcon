@@ -120,10 +120,15 @@ def transform_gl_lines(row):
     # reconstruct date from financial year and period, because it's infrequently different and Costcon reporting is based on financial year and period
     fy = int(row["year"])
     period = int(row["period"])
-    day = int(row["transaction_date"][-2:])
+    d = int(row["transaction_date"][-2:]) if row["transaction_date"] is not None else 1
     year = fy if period > 9 else fy - 1
     month = ((period + 2) % 12) + 1
-    dt = construct_date(year, month, day)
+    try:
+        dt = construct_date(year, month, d)
+    except:
+        # if the original transaction_date was on the 31st and the new month is say April, then constructing the date will throw
+        # this is rare and there's no good answer, so the 1st of the month will work fine
+        dt = construct_date(year, month, 1)
     row["transaction_date"] = dt
 
     return row
