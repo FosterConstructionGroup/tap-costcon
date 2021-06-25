@@ -18,6 +18,7 @@
       "format": "date-time"
     },
     "appointed": { "type": ["number"] },
-    "t_contract_value": { "type": ["number"] }
+    "t_contract_value": { "type": ["number"] },
+    "t_budget_value": { "type": ["number"] }
   }
 }
