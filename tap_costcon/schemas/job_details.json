@@ -30,6 +30,7 @@
     },
     "branch_id": { "type": ["number"] },
     "contract_value": { "type": ["number"] },
+    "budget_value": { "type": ["number"] },
     "variations_contract_value": { "type": ["number"] }
   }
 }
