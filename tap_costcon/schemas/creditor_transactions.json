@@ -1,0 +1,25 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "ct_guid": { "type": ["string"] },
+    "job_number": { "type": ["null", "string"] },
+    "creditor_code": { "type": ["null", "string"] },
+    "transaction_type": { "type": ["null", "string"] },
+    "ct_created_timestamp": { "type": ["string"], "format": "date-time" },
+    "ct_modified_timestamp": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "reference": { "type": ["null", "string"] },
+    "ps_payment_schedule_number": { "type": ["null", "string"] },
+    "date": { "type": ["null", "string"], "format": "date" },
+    "posted_date": { "type": ["null", "string"], "format": "date" },
+    "period": { "type": ["null", "number"] },
+    "status": { "type": ["null", "string"] },
+    "unallocated": { "type": ["null", "number"] },
+    "tax_inclusive_retention": { "type": ["null", "number"] },
+    "hold_amount": { "type": ["null", "number"] },
+    "tax_inclusive_amount": { "type": ["null", "number"] }
+  }
+}

@@ -4,6 +4,7 @@ ID_FIELDS = {
     "categories": ["code"],
     "contacts": ["contact_code"],
     "cost_transactions": ["ct_guid"],
+    "creditor_transactions": ["ct_guid"],
     "debtor_transactions": ["ct_guid"],
     "debtor_transaction_lines": ["ct_guid"],
     "gl_codes": ["ct_guid"],
@@ -19,6 +20,7 @@ HANDLERS = {
     "categories": handle_generic(unique_key="code"),
     "contacts": handle_generic(unique_key="contact_code"),
     "cost_transactions": handle_generic(),
+    "creditor_transactions": handle_generic(),
     "debtor_transactions": handle_generic(
         trim_columns=["transaction_description"],
         # date_modified is mostly null, and rows can't be edited once posted
