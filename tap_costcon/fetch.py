@@ -8,7 +8,6 @@ from tap_costcon.utility import (
     parse_date,
     format_date,
     get_time,
-    hash,
     construct_date,
     parse_csv,
     transform_record,

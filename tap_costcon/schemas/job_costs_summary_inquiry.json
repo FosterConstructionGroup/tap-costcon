@@ -1,0 +1,17 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": ["string"] },
+    "job_number": { "type": ["string"] },
+    "subcategory": { "type": ["string"] },
+    "control_estimate": { "type": ["number"] },
+    "VOs": { "type": ["number"] },
+    "internal_variations": { "type": ["number"] },
+    "revised_estimate": { "type": ["number"] },
+    "costs_to_date": { "type": ["number"] },
+    "estimated_to_complete": { "type": ["number"] },
+    "total_cost": { "type": ["number"] },
+    "variance": { "type": ["number"] }
+  }
+}

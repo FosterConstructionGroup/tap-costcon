@@ -10,6 +10,7 @@ ID_FIELDS = {
     "gl_codes": ["ct_guid"],
     "gl_lines": ["ct_guid"],
     "job_costs_inquiry": ["ct_guid"],
+    "job_costs_summary_inquiry": ["id"],
     "job_details": ["job_number"],
     "job_subcontractors": ["ct_guid"],
     "subcategories": ["code"],
@@ -34,6 +35,14 @@ HANDLERS = {
             "VO#": "variation_order_number",
             "Job Variation Order GUID": "variation_order_guid",
         },
+    ),
+    "job_costs_summary_inquiry": handle_generic(
+        mappings={
+            "Job": "job_number",
+            "VOs (Internal)": "internal_variations",
+            "Costs to Date (inc unposted)": "costs_to_date",
+        },
+        id_function=lambda row: row["job_number"] + "_" + row["subcategory"],
     ),
     "job_details": handle_generic(
         mappings={
