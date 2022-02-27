@@ -43,6 +43,8 @@ HANDLERS = {
             "Costs to Date (inc unposted)": "costs_to_date",
         },
         id_function=lambda row: row["job_number"] + "_" + row["subcategory"],
+        # works fine locally without explicitly specifying this but breaks in prod
+        date_column=None,
     ),
     "job_details": handle_generic(
         mappings={
