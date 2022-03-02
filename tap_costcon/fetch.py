@@ -107,14 +107,12 @@ def transform_job_details(row):
     # Redshift doesn't have an easy try_cast function so can't do the try_except block below
     # for specific conditions, see notes at https://www.notion.so/fosters/Board-reporting-f5d403ed64c44594873e9fcffec9a3ef#46b4428950834c7bafb94eb0fc22e9e9
     # note that about 20 rows have null `ct_created_timestamp`, which is a data source error in Costcon. None of these are old jobs so can safely keep the original job_number
-    try:
+    if row["ct_created_timestamp"]:
         year = int(row["ct_created_timestamp"][:4])
         if row["company_code"] == "FOSTER" and year >= 2005:
             reg = job_regex.search(mapped)
             if reg:
                 mapped = int(reg.group(0))
-    except:
-        pass
 
     row["consolidated_job_number"] = mapped
     return row
