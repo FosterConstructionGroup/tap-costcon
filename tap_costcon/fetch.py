@@ -1,3 +1,4 @@
+import re
 import singer
 import singer.metrics as metrics
 from singer import metadata
@@ -12,6 +13,8 @@ from tap_costcon.utility import (
     parse_csv,
     transform_record,
 )
+
+job_regex = re.compile(r"^\d+")
 
 
 def handle_generic(
@@ -107,7 +110,9 @@ def transform_job_details(row):
     try:
         year = int(row["ct_created_timestamp"][:4])
         if row["company_code"] == "FOSTER" and year >= 2005:
-            mapped = int(mapped[:3])
+            reg = job_regex.search(mapped)
+            if reg:
+                mapped = int(reg.group(0))
     except:
         pass
 
