@@ -6,7 +6,7 @@
     "job_number": { "type": ["string"] },
     "subcategory": { "type": ["string"] },
     "control_estimate": { "type": ["number"] },
-    "VOs": { "type": ["number"] },
+    "variations": { "type": ["number"] },
     "internal_variations": { "type": ["number"] },
     "revised_estimate": { "type": ["number"] },
     "costs_to_date": { "type": ["number"] },

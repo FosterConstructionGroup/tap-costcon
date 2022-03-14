@@ -39,6 +39,7 @@ HANDLERS = {
     "job_costs_summary_inquiry": handle_generic(
         mappings={
             "Job": "job_number",
+            "VOs": "variations",
             "VOs (Internal)": "internal_variations",
             "Costs to Date (inc unposted)": "costs_to_date",
         },
