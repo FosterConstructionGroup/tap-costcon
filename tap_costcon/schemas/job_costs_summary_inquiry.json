@@ -12,6 +12,7 @@
     "costs_to_date": { "type": ["number"] },
     "estimated_to_complete": { "type": ["number"] },
     "total_cost": { "type": ["number"] },
-    "variance": { "type": ["number"] }
+    "variance": { "type": ["number"] },
+    "file_modified_time": { "type": ["string"], "format": "date-time" }
   }
 }

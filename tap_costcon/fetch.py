@@ -41,27 +41,24 @@ def handle_generic(
         properties = schema["properties"]
 
         files = list_files(folder_path + resource)
-        to_sync = (
-            [file for (file, time) in files]
-            if bookmark == None
-            else [
-                file
-                for (file, time) in files
-                if datetime.fromtimestamp(time) > parse_date(bookmark)
-            ]
-        )
+        to_sync = [
+            (file, time)
+            for (file, time) in files
+            if bookmark == None or datetime.fromtimestamp(time) > parse_date(bookmark)
+        ]
 
         # many duplicate records; way faster to deduplicate in memory than to send to Redshift
         # small performance hit for a batch with one file but massive performance improvements otherwise
         unique = {}
 
-        for file in to_sync:
+        for (file, modified_time) in to_sync:
             if mappings is not None:
                 records = parse_csv(file, mappings=mappings)
             else:
                 records = parse_csv(file)
 
             for record in records:
+                record["file_modified_time"] = modified_time
                 row = transform_record(properties, record, trim_columns=trim_columns)
 
                 # row-level filtering where possible
