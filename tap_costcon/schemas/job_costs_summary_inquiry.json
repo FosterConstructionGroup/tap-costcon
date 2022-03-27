@@ -5,6 +5,7 @@
     "id": { "type": ["string"] },
     "job_number": { "type": ["string"] },
     "subcategory": { "type": ["string"] },
+    "job_cost_flexi_desc_or_sub_cat_desc": { "type": ["string"] },
     "control_estimate": { "type": ["number"] },
     "variations": { "type": ["number"] },
     "internal_variations": { "type": ["number"] },
