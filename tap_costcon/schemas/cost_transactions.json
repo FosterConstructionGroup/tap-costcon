@@ -41,6 +41,7 @@
     "calculated_sell_qty": { "type": ["number"] },
     "calculated_sell_rate": { "type": ["number"] },
     "calculated_sell_value_(mu)": { "type": ["number"] },
-    "calculated_sell_value_(ob)": { "type": ["number"] }
+    "calculated_sell_value_(ob)": { "type": ["number"] },
+    "id_name": { "type": ["null", "string"] }
   }
 }
