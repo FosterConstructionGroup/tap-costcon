@@ -58,6 +58,9 @@ def handle_generic(
                 records = parse_csv(file)
 
             for record in records:
+                if record.get("status") == "In Error":
+                    continue
+
                 record["file_modified_time"] = modified_time
                 row = transform_record(properties, record, trim_columns=trim_columns)
 
