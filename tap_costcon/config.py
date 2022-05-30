@@ -1,7 +1,7 @@
 from tap_costcon.fetch import handle_generic, transform_job_details, transform_gl_lines
 
 ID_FIELDS = {
-    "categories": ["code"],
+    "categories": ["id"],
     "contacts": ["contact_code"],
     "cost_transactions": ["ct_guid"],
     "creditor_transactions": ["ct_guid"],
@@ -13,12 +13,14 @@ ID_FIELDS = {
     "job_costs_summary_inquiry": ["id"],
     "job_details": ["job_number"],
     "job_subcontractors": ["ct_guid"],
-    "subcategories": ["code"],
+    "subcategories": ["id"],
     "variation_orders": ["ct_guid"],
 }
 
 HANDLERS = {
-    "categories": handle_generic(unique_key="code"),
+    "categories": handle_generic(
+        id_function=lambda row: row["company_code"] + "_" + row["code"]
+    ),
     "contacts": handle_generic(unique_key="contact_code"),
     "cost_transactions": handle_generic(),
     "creditor_transactions": handle_generic(),
@@ -59,6 +61,8 @@ HANDLERS = {
         transform_fn=transform_job_details,
     ),
     "job_subcontractors": handle_generic(),
-    "subcategories": handle_generic(unique_key="code"),
+    "subcategories": handle_generic(
+        id_function=lambda row: row["company_code"] + "_" + row["code"]
+    ),
     "variation_orders": handle_generic(),
 }

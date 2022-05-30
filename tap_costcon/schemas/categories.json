@@ -2,10 +2,12 @@
   "type": ["null", "object"],
   "additionalProperties": false,
   "properties": {
+    "id": { "type": ["string"] },
     "code": { "type": ["string"] },
     "description": { "type": ["string"] },
     "category_classification_description": { "type": ["null", "string"] },
     "inactive": { "type": ["boolean"] },
+    "company_code": { "type": ["string"] },
     "ct_created_timestamp": { "type": ["string"], "format": "date-time" },
     "ct_modified_timestamp": {
       "type": ["null", "string"],
