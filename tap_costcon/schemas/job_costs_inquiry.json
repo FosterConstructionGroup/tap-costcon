@@ -21,6 +21,7 @@
     "t_contract_value": { "type": ["number"] },
     "t_budget_value": { "type": ["number"] },
     "predicted": { "type": ["number"] },
-    "actual_to_date": { "type": ["number"] }
+    "actual_to_date": { "type": ["number"] },
+    "company_code": { "type": ["null", "string"] }
   }
 }
