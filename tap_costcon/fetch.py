@@ -14,7 +14,9 @@ from tap_costcon.utility import (
     transform_record,
 )
 
-job_regex = re.compile(r"^\d+")
+
+# see examples at https://regex101.com/r/n0GB7q/1
+job_regex = re.compile(r"^(\d+)[a-zA-Z]*?(BOP)?$")
 
 
 def handle_generic(
@@ -109,10 +111,11 @@ def transform_job_details(row):
     # note that about 20 rows have null `ct_created_timestamp`, which is a data source error in Costcon. None of these are old jobs so can safely keep the original job_number
     if row["ct_created_timestamp"]:
         year = int(row["ct_created_timestamp"][:4])
-        if row["company_code"] == "FOSTER" and year >= 2005:
-            reg = job_regex.search(mapped)
-            if reg:
-                mapped = int(reg.group(0))
+        if row["company_code"] in ["FOSTER", "FCLBOP"] and year >= 2005:
+            match = job_regex.search(mapped)
+            if match:
+                (job, bop) = match.groups()
+                mapped = job + bop if bop else job
 
     row["consolidated_job_number"] = mapped
     return row
