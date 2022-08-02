@@ -15,8 +15,8 @@ from tap_costcon.utility import (
 )
 
 
-# see examples at https://regex101.com/r/n0GB7q/1
-job_regex = re.compile(r"^(\d+)[a-zA-Z]*?(BOP)?$")
+# see examples at https://regex101.com/r/n0GB7q/2
+job_regex = re.compile(r"^(\d+)[a-zA-Z-\d]*?(BOP)?$")
 
 
 def handle_generic(
