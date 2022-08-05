@@ -45,14 +45,22 @@ def try_float(s, fallback=None):
         return fallback
 
 
+# generator to reduce memory consumption
 def parse_csv(path, delimiter=",", mappings={}, skip=0):
     with open(path, encoding="utf-8-sig") as contents:
-        parsed = [row for row in csv.reader(contents, delimiter=delimiter)]
+        index = 0
+        reader = csv.reader(contents, delimiter=delimiter)
         headers = [
-            transform_column_name(mappings.get(h.strip(), h)) for h in parsed[skip]
+            transform_column_name(mappings.get(h.strip(), h)) for h in next(reader)
         ]
-        rows = parsed[(skip + 1) :]
-        return [dict(zip(headers, r)) for r in rows]
+
+        for row in reader:
+            index += 1
+            # skip rows
+            if index <= (skip + 1):
+                continue
+
+            yield dict(zip(headers, row))
 
 
 def transform_record(properties, record, date_format="%d/%m/%Y", trim_columns=[]):

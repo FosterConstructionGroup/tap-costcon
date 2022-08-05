@@ -20,7 +20,7 @@ job_regex = re.compile(r"^(\d+)[a-zA-Z-\d]*?(BOP)?$")
 
 
 def handle_generic(
-    mappings=None,
+    mappings={},
     id_function=None,
     unique_key="ct_guid",
     trim_columns=[],
@@ -54,17 +54,12 @@ def handle_generic(
         unique = {}
 
         for (file, modified_time) in to_sync:
-            if mappings is not None:
-                records = parse_csv(file, mappings=mappings)
-            else:
-                records = parse_csv(file)
-
-            for record in records:
-                if record.get("status") == "In Error":
+            for row in parse_csv(file, mappings=mappings):
+                if row.get("status") == "In Error":
                     continue
 
-                record["file_modified_time"] = modified_time
-                row = transform_record(properties, record, trim_columns=trim_columns)
+                row["file_modified_time"] = modified_time
+                row = transform_record(properties, row, trim_columns=trim_columns)
 
                 # row-level filtering where possible
                 parsed_date_column = (
@@ -82,17 +77,19 @@ def handle_generic(
                 ):
                     continue
 
-                if transform_fn is not None:
+                if transform_fn:
                     row = transform_fn(row)
 
-                if id_function is not None:
+                if id_function:
                     row["id"] = id_function(row)
 
+                key = row[unique_key_name]
+
                 # the primary key should never be blank
-                if row[unique_key_name] is None or row[unique_key_name] == "":
+                if not key:
                     continue
 
-                unique[row[unique_key_name]] = row
+                unique[key] = row
 
         with metrics.record_counter(resource) as counter:
             for row in unique.values():

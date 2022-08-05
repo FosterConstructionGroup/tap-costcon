@@ -111,7 +111,7 @@ def do_sync(config, state, catalog):
                 stream_id, stream_schema, state, mdata, config["folder"]
             )
 
-            singer.write_state(state)
+    singer.write_state(state)
 
 
 @singer.utils.handle_top_exception(logger)
