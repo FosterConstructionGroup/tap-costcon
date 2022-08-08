@@ -64,8 +64,8 @@ def transform_record(properties, record, date_format="%d/%m/%Y", trim_columns=[]
         if key in trim_columns:
             record[key] = val[:1000]
 
-        if key in properties:
-            prop = properties.get(key)
+        prop = properties.get(key)
+        if prop:
             # numbers come through as strings
             if prop.get("type")[-1] == "number":
                 record[key] = None if val == "" else float(record[key])
