@@ -95,6 +95,7 @@ def handle_generic(
             for row in unique.values():
                 write_record(row, resource, schema, mdata, extraction_time)
                 counter.increment()
+        del unique
         return write_bookmark(state, resource, extraction_time)
 
     return do_generic
