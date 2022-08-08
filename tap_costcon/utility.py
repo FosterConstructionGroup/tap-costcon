@@ -46,20 +46,14 @@ def try_float(s, fallback=None):
 
 
 # generator to reduce memory consumption
-def parse_csv(path, delimiter=",", mappings={}, skip=0):
+def parse_csv(path, delimiter=",", mappings={}):
     with open(path, encoding="utf-8-sig") as contents:
-        index = 0
         reader = csv.reader(contents, delimiter=delimiter)
         headers = [
             transform_column_name(mappings.get(h.strip(), h)) for h in next(reader)
         ]
 
         for row in reader:
-            index += 1
-            # skip rows
-            if index <= (skip + 1):
-                continue
-
             yield dict(zip(headers, row))
 
 
