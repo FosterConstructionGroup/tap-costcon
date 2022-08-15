@@ -51,51 +51,52 @@ def handle_generic(
 
         # many duplicate records; way faster to deduplicate in memory than to send to Redshift
         # small performance hit for a batch with one file but massive performance improvements otherwise
-        unique = {}
-
-        for (file, modified_time) in to_sync:
-            for row in parse_csv(file, mappings=mappings):
-                if row.get("status") == "In Error":
-                    continue
-
-                row["file_modified_time"] = modified_time
-                row = transform_record(properties, row, trim_columns=trim_columns)
-
-                # row-level filtering where possible
-                parsed_date_column = (
-                    None
-                    if bookmark is None
-                    or date_column is None
-                    or row[date_column] is None
-                    else parse_date(row[date_column])
-                    if date_column_type == "timestamp"
-                    else datetime.date(parse_date(row[date_column], "%Y-%m-%d"))
-                )
-                if (
-                    parsed_date_column is not None
-                    and parsed_date_column < parsed_bookmark
-                ):
-                    continue
-
-                if transform_fn:
-                    row = transform_fn(row)
-
-                if id_function:
-                    row["id"] = id_function(row)
-
-                key = row[unique_key_name]
-
-                # the primary key should never be blank
-                if not key:
-                    continue
-
-                unique[key] = row
+        # way lower memory use to sync files in reverse order and just track seen IDs (then skip seen rows) instead of storing all deduplicated data in memory
+        seen_ids = set()
 
         with metrics.record_counter(resource) as counter:
-            for row in unique.values():
-                write_record(row, resource, schema, mdata, extraction_time)
-                counter.increment()
-        del unique
+            for (file, modified_time) in to_sync:
+                for row in parse_csv(file, mappings=mappings):
+                    if row.get("status") == "In Error":
+                        continue
+
+                    row["file_modified_time"] = modified_time
+                    row = transform_record(properties, row, trim_columns=trim_columns)
+
+                    # row-level filtering where possible
+                    parsed_date_column = (
+                        None
+                        if bookmark is None
+                        or date_column is None
+                        or row[date_column] is None
+                        else parse_date(row[date_column])
+                        if date_column_type == "timestamp"
+                        else datetime.date(parse_date(row[date_column], "%Y-%m-%d"))
+                    )
+                    if (
+                        parsed_date_column is not None
+                        and parsed_date_column < parsed_bookmark
+                    ):
+                        continue
+
+                    if transform_fn:
+                        row = transform_fn(row)
+
+                    if id_function:
+                        row["id"] = id_function(row)
+
+                    key = row[unique_key_name]
+
+                    # the primary key should never be blank
+                    if not key or key in seen_ids:
+                        continue
+
+                    seen_ids.add(key)
+
+                    write_record(row, resource, schema, mdata, extraction_time)
+                    counter.increment()
+
+        seen_ids.clear()
         return write_bookmark(state, resource, extraction_time)
 
     return do_generic

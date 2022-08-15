@@ -8,7 +8,8 @@ import pytz
 def list_files(folder_path):
     paths = [path.join(folder_path, fl) for fl in listdir(path.join(folder_path))]
     files = [(p, path.getmtime(p)) for p in paths]
-    files.sort(key=lambda x: x[1])
+    # reversed order means most recent files first; can couple this with a `set` to track already-seen rows instead of a `dict` to deduplicate
+    files.sort(key=lambda x: x[1], reverse=True)
     return files
 
 
