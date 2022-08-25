@@ -23,6 +23,7 @@
     "transaction_reference": { "type": ["null", "string"] },
     "transaction_description": { "type": ["null", "string"] },
     "tax_exclusive_amount_net": { "type": ["number"] },
+    "tax_inclusive_amount": { "type": ["number"] },
     "job_number": { "type": ["string"] },
     "retention_released": { "type": ["number"] },
     "claim_retention": { "type": ["number"] }
