@@ -26,6 +26,8 @@
     "tax_inclusive_amount": { "type": ["number"] },
     "job_number": { "type": ["string"] },
     "retention_released": { "type": ["number"] },
-    "claim_retention": { "type": ["number"] }
+    "claim_retention": { "type": ["number"] },
+    "claim_previous_retention_value": { "type": ["number"] },
+    "claim_previous_retentionrelease": { "type": ["number"] }
   }
 }
