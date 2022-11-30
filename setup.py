@@ -12,7 +12,7 @@ setup(
     py_modules=["tap_costcon"],
     install_requires=[
         "pipelinewise-singer-python==1.*",
-        "pytz==2018.4",
+        "pytz==2020.1",
     ],
     extras_require={
         "dev": [
