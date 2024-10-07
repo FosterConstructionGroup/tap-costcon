@@ -15,6 +15,7 @@
     "total_cost": { "type": ["number"] },
     "variance": { "type": ["number"] },
     "file_modified_time": { "type": ["string"], "format": "date-time" },
-    "company_code": { "type": ["null", "string"] }
+    "company_code": { "type": ["null", "string"]},
+    "actuals_to_date"{ "type": ["number"] }
   }
 }
