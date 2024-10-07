@@ -44,6 +44,7 @@ HANDLERS = {
             "VOs": "variations",
             "VOs (Internal)": "internal_variations",
             "Costs to Date (inc unposted)": "costs_to_date",
+            "Actuals To Date( Posted)": "actuals_to_date",
         },
         id_function=lambda row: row["job_number"] + "_" + row["subcategory"],
         # works fine locally without explicitly specifying this but breaks in prod
